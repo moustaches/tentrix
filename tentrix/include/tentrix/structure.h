@@ -1,6 +1,8 @@
-#ifndef STRUCTURE_H
-#define STRUCTURE_H
+#ifndef TENTRIX_STRUCTURE_H
+#define TENTRIX_STRUCTURE_H
 
+
+// Include STD
 #include <string_view>
 #include <cstdint>
 #include <array>
@@ -46,4 +48,4 @@ private:
     u64 getLetter(char letter) const;
 
 };
-#endif // STRUCTURE_H
+#endif // TENTRIX_STRUCTURE_H

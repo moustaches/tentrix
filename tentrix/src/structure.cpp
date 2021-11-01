@@ -1,9 +1,14 @@
-#include "structure.h"
 
+// Include Project
+#include "tentrix/structure.h"
+
+// Include STD
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
 #include <bitset>
+
+
 
 PositionLetter::PositionLetter(std::string_view position_char)
 {

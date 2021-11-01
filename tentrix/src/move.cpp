@@ -1,7 +1,13 @@
-#include "move.h"
-#include "structure.h"
-#include "print.h"
+
+// Include Project
+#include "tentrix/move.h"
+#include "tentrix/structure.h"
+#include "tentrix/print.h"
+
+// Include STD
 #include "iostream"
+
+
 
 void Position::setPosition(const PositionLetter &position_letter){
     bitboard[E_BB::WHITE] = position_letter.getWhitesBB();

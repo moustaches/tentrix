@@ -1,8 +1,10 @@
-#ifndef MOVE_H
-#define MOVE_H
+#ifndef TENTRIX_MOVE_H
+#define TENTRIX_MOVE_H
 
+// Include Project
 #include "structure.h"
 
+// Include STD
 #include <cstdint>
 #include <array>
 #include <bitset>
@@ -105,4 +107,4 @@ private:
 };
 
 
-#endif // MOVE_H
+#endif // TENTRIX_MOVE_H

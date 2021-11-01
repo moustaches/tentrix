@@ -1,9 +1,12 @@
-#ifndef PRINT_H
-#define PRINT_H
+#ifndef TENTRIX_PRINT_H
+#define TENTRIX_PRINT_H
 
+//Include STD
 #include <iostream>
 #include <bitset>
 #include <cstdint>
+
+
 
 enum PRINT_MODE{BB36, BB64};
 
@@ -38,4 +41,4 @@ inline void print<std::uint64_t>(const std::uint64_t& bit_board, PRINT_MODE prin
     print( std::bitset<64>(bit_board), print_mode);
 };
 
-#endif // PRINT_H
+#endif // TENTRIX_PRINT_H
