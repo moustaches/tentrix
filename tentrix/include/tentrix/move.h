@@ -92,8 +92,10 @@ class Position{
 public:
 
     void setPosition(const PositionLetter& position_letter);
-    u64 computeMoveQueenWhite_1(unsigned char index) const;
-    u64 computeMoveQueenWhite_2(unsigned char index) const;
+    u64 computeMoveQueenWhite(unsigned char index) const;
+    u64 computeMoveQueenWhite_2(int index) const;
+
+    //int
 
 private:
     const u64 mask_36 = 0b0000000000000000000000000000'111111'111111'111111'111111'111111'111111;

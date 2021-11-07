@@ -34,7 +34,7 @@ static void BM_computeMoveQueenWhite_1(benchmark::State& state) {
     Position position{};
     position.setPosition(position_string);
     for (auto _ : state)
-        u64 queen_move = position.computeMoveQueenWhite_1(15);
+        u64 queen_move = position.computeMoveQueenWhite(15);
 }
 BENCHMARK(BM_computeMoveQueenWhite_1);
 
