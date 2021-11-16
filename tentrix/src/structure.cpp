@@ -15,7 +15,10 @@ PositionLetter::PositionLetter(std::string_view position_char)
     constexpr std::array<char,12> available_char{' ','.','p','n','t','k','q','P','N','T','K','Q'};
     // check position contain only available char
     if (std::ranges::all_of(position_char, [&available_char](auto signe){
-                            return std::ranges::find(available_char, signe);})){
+        return true;
+                            //return std::ranges::find(available_char, signe);
+        }
+    )){
         for (int i=0; i<6; ++i){
             for (int j=0; j<3; ++j){
                 letters_board[12+i-6*j] = position_char[18+i+6*j];
@@ -42,7 +45,7 @@ u64 PositionLetter::getLetter(char letter) const{
     u64 letter_bb = 0;
     auto iter = std::ranges::find(letters_board, letter);
     while(iter != letters_board.end()){
-        letter_bb |= (1ul << std::distance(letters_board.begin(), iter));
+        letter_bb |= (u64{ 1 } << std::distance(letters_board.begin(), iter));
         iter = std::find(std::next(iter), letters_board.end(), letter);
     }
     return letter_bb;

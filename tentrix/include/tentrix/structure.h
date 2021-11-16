@@ -23,7 +23,7 @@ enum E_RAY_DIR{ NORTH=0, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, 
 
 struct Piece{
     unsigned char index: 6 {0};
-    E_PIECE type: 4 {0};
+    E_PIECE type : 4 {E_PIECE::EMPTY};
     bool has_moved: 1 {0};
 };
 
