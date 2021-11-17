@@ -5,7 +5,8 @@
 #include "tentrix/print.h"
 
 // Include STD
-#include "iostream"
+#include <iostream>
+#include <bitset>
 
 
 
@@ -34,7 +35,7 @@ u64 Position::computeMoveQueenWhite(unsigned char index) const{
     }
     for (int dir = 4; dir<8; ++dir){
         u64 rayBB = freeMovesQueen[index][dir];
-        u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]) & mask_36;
+        u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
         int first_bloquer = 63-std::countl_zero(bloquers);
         if (bloquers>0){
             rayBB ^= freeMovesQueen[first_bloquer][dir];
@@ -45,27 +46,31 @@ u64 Position::computeMoveQueenWhite(unsigned char index) const{
     return moveBB;
 }
 
-u64 Position::computeMoveQueenWhite_2(int index) const{
-    u64 moveBB{0};
-    for (int dir = 0; dir<4; ++dir){
-        u64 rayBB = freeMovesQueen[index][dir];
-        u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-        int first_bloquer = std::countr_zero(bloquers);
-        if (first_bloquer<36){
-            rayBB ^= freeMovesQueen[first_bloquer][dir];
-        }
-        rayBB &= ~bitboard[WHITE];
-        moveBB |= rayBB;
+
+int Position::getPopIndexBB_1(u64& bitboard) {
+    std::bitset<64> bit_set{bitboard};
+    auto index = bit_set._Find_first();
+    if (index < 64){
+        bitboard = bit_set.reset(index).to_ulong();
     }
-    for (int dir = 4; dir<8; ++dir){
-        u64 rayBB = freeMovesQueen[index][dir];
-        u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-        int first_bloquer = 63-std::countl_zero(bloquers);
-        if (bloquers>0){
-            rayBB ^= freeMovesQueen[first_bloquer][dir];
-        }
-        rayBB &= ~bitboard[WHITE];
-        moveBB |= rayBB;
+    return index;
+}
+
+int Position::getPopIndexBB_2(u64& bitboard) {
+    std::bitset<64> bit_set{bitboard};
+    auto index = bit_set._Find_first();
+    if (index < 64){
+        bitboard &= ~(u64{1} << index);
     }
-    return moveBB;
+    return index;
+}
+
+int Position::getPopIndexBB_3(u64& bitboard) {
+    auto index = __builtin_ctzl(bitboard);
+    bitboard ^= (bitboard & -bitboard);
+    return index;
+}
+
+std::pair<int, u64> Position::getPopIndexBB_4(u64 bitboard){
+    return std::make_pair(__builtin_ctzl(bitboard), bitboard ^(bitboard & -bitboard));
 }

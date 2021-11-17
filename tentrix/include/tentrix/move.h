@@ -32,7 +32,7 @@ constexpr u64 computeRay(int index, std::pair<int,int> direction){
     int i = index%6 + direction.first;
     int j = index/6 + direction.second;
     while ((i >=0 && i <= 5) && (j >=0 && j <= 5)){
-        bitboard |= (1ul << (i+j*6));
+        bitboard |= (u64{ 1 } << (i + j * 6));
         i += direction.first;
         j += direction.second;
     }
@@ -79,7 +79,7 @@ consteval std::array<u64, 36> computeFreeMoveKnight(){
         int j_0 = iter/6;
         for (auto direction : directions){
             if ((i_0+direction.first >= 0) && (i_0+direction.first <=5) && (j_0+direction.second >= 0) && (j_0+direction.second <=5)){
-               pos |= (1ul <<((i_0+direction.first)+((j_0+direction.second)*6)));
+                pos |= (u64{ 1 } << ((i_0 + direction.first) + ((j_0 + direction.second) * 6)));
             }
         }
         piece_move[iter]=pos;
@@ -88,14 +88,17 @@ consteval std::array<u64, 36> computeFreeMoveKnight(){
 };
 
 
+
 class Position{
 public:
 
     void setPosition(const PositionLetter& position_letter);
     u64 computeMoveQueenWhite(unsigned char index) const;
-    u64 computeMoveQueenWhite_2(int index) const;
 
-    //int
+    static int getPopIndexBB_1(u64& bitboard);
+    static int getPopIndexBB_2(u64& bitboard);
+    static int getPopIndexBB_3(u64& bitboard);
+    static std::pair<int, u64> getPopIndexBB_4(u64 bitboard);
 
 private:
     const u64 mask_36 = 0b0000000000000000000000000000'111111'111111'111111'111111'111111'111111;
