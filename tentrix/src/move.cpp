@@ -66,11 +66,16 @@ int Position::getPopIndexBB_2(u64& bitboard) {
 }
 
 int Position::getPopIndexBB_3(u64& bitboard) {
-    auto index = __builtin_ctzl(bitboard);
+    auto index = std::countr_zero(bitboard);
     bitboard ^= (bitboard & -bitboard);
     return index;
 }
 
 std::pair<int, u64> Position::getPopIndexBB_4(u64 bitboard){
-    return std::make_pair(__builtin_ctzl(bitboard), bitboard ^(bitboard & -bitboard));
+    return std::make_pair(std::countr_zero(bitboard), bitboard ^(bitboard & -bitboard));
+}
+
+std::pair<int, u64> Position::getPopIndexBB_5(u64 bitboard){
+    auto index = std::countr_zero(bitboard);
+    return std::make_pair(index , bitboard & ~(u64{1} << index));
 }

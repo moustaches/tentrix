@@ -36,8 +36,6 @@ static void BM_computeMoveQueenWhite(benchmark::State& state) {
     for (auto _ : state)
         u64 queen_move = position.computeMoveQueenWhite(15);
 }
-BENCHMARK(BM_computeMoveQueenWhite);
-
 
 static void BM_getPopIndexBB_1(benchmark::State& state) {
     Position position{};
@@ -50,7 +48,6 @@ static void BM_getPopIndexBB_1(benchmark::State& state) {
         }
     };
 }
-BENCHMARK(BM_getPopIndexBB_1);
 
 static void BM_getPopIndexBB_2(benchmark::State& state) {
     Position position{};
@@ -63,7 +60,6 @@ static void BM_getPopIndexBB_2(benchmark::State& state) {
         }
     };
 }
-BENCHMARK(BM_getPopIndexBB_2);
 
 static void BM_getPopIndexBB_3(benchmark::State& state) {
     Position position{};
@@ -76,7 +72,6 @@ static void BM_getPopIndexBB_3(benchmark::State& state) {
         }
     };
 }
-BENCHMARK(BM_getPopIndexBB_3);
 
 static void BM_getPopIndexBB_4(benchmark::State& state) {
     Position position{};
@@ -90,8 +85,28 @@ static void BM_getPopIndexBB_4(benchmark::State& state) {
         }
     };
 }
+
+static void BM_getPopIndexBB_5(benchmark::State& state) {
+    Position position{};
+    int index;
+    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
+    for (auto _ : state){
+        u64 bb {bb_0};
+        for (int i = 0; i<8; ++i){
+            auto ret = position.getPopIndexBB_5(bb);
+            //bb = ret.second;
+        }
+    };
+}
+BENCHMARK(BM_getPopIndexBB_5);
+BENCHMARK(BM_getPopIndexBB_4);
 BENCHMARK(BM_getPopIndexBB_3);
+BENCHMARK(BM_getPopIndexBB_2);
+BENCHMARK(BM_getPopIndexBB_1);
 BENCHMARK_MAIN();
+
+
+
 
 
 

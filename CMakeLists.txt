@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+endif()
+
 project(tentrix LANGUAGES CXX)
 
 include(/home/moustache/vcpkg/scripts/buildsystems/vcpkg.cmake)

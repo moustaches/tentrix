@@ -48,4 +48,6 @@ private:
     u64 getLetter(char letter) const;
 
 };
+
+
 #endif // TENTRIX_STRUCTURE_H

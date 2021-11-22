@@ -132,3 +132,23 @@ TEST(Position, getPopIndexBB_4)
     ret = position.getPopIndexBB_4(ret.second);
    // ASSERT_EQ( 0, ret.first);
 }
+
+TEST(Position, getPopIndexBB_5)
+{
+    u64 bb{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
+    Position position{};
+    auto ret = position.getPopIndexBB_5(bb);
+    ASSERT_EQ( 0, ret.first);
+    ret = position.getPopIndexBB_5(ret.second);
+    ASSERT_EQ( 5, ret.first);
+    ret = position.getPopIndexBB_5(ret.second);
+    ASSERT_EQ( 7, ret.first);
+    ret = position.getPopIndexBB_5(ret.second);
+    ASSERT_EQ( 12, ret.first);
+    ret = position.getPopIndexBB_5(ret.second);
+    ASSERT_EQ( 21, ret.first);
+    ret = position.getPopIndexBB_5(ret.second);
+    ASSERT_EQ( 35, ret.first);
+    ret = position.getPopIndexBB_5(ret.second);
+   // ASSERT_EQ( 0, ret.first);
+}

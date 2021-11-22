@@ -88,8 +88,23 @@ consteval std::array<u64, 36> computeFreeMoveKnight(){
 };
 
 
+class Move{
+    u64 finish;
+    Piece piece;
+    Piece piece_;
+    bool eat;
+};
+
 
 class Position{
+public:
+    std::vector<Position*> sons;
+    float eval;
+    Move move;
+};
+
+
+class PositionMaker{
 public:
 
     void setPosition(const PositionLetter& position_letter);
@@ -99,6 +114,9 @@ public:
     static int getPopIndexBB_2(u64& bitboard);
     static int getPopIndexBB_3(u64& bitboard);
     static std::pair<int, u64> getPopIndexBB_4(u64 bitboard);
+    static std::pair<int, u64> getPopIndexBB_5(u64 bitboard);
+
+    static void makeMove_1(Position& current_position, Position futur_position, Move move);
 
 private:
     const u64 mask_36 = 0b0000000000000000000000000000'111111'111111'111111'111111'111111'111111;
@@ -108,7 +126,6 @@ private:
 
     u64 bitboard[7];
     std::vector<Piece> pieces;
-
 };
 
 
