@@ -32,7 +32,7 @@ int main()
 
     print(position_string.getPawnsBB(), BB36 );
 
-    Position position{};
+    PositionMaker position{};
     position.setPosition(position_string);
 
     return 0;

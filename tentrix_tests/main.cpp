@@ -23,7 +23,7 @@ using u64 = uint64_t;
 
 TEST(Position, computeMoveQueenWhite)
 {
-    Position position{};
+    PositionMaker position{};
     u64 queen_move{};
 
     position.setPosition(PositionLetter{ "......"
@@ -76,7 +76,7 @@ TEST(Position, computeMoveQueenWhite)
 TEST(Position, getPopIndexBB_1)
 {
     u64 bb{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-    Position position{};
+    PositionMaker position{};
     ASSERT_EQ( 0, position.getPopIndexBB_1(bb));
     ASSERT_EQ( 5, position.getPopIndexBB_1(bb));
     ASSERT_EQ( 7, position.getPopIndexBB_1(bb));
@@ -90,7 +90,7 @@ TEST(Position, getPopIndexBB_1)
 TEST(Position, getPopIndexBB_2)
 {
     u64 bb{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-    Position position{};
+    PositionMaker position{};
     ASSERT_EQ( 0, position.getPopIndexBB_2(bb));
     ASSERT_EQ( 5, position.getPopIndexBB_2(bb));
     ASSERT_EQ( 7, position.getPopIndexBB_2(bb));
@@ -103,7 +103,7 @@ TEST(Position, getPopIndexBB_2)
 TEST(Position, getPopIndexBB_3)
 {
     u64 bb{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-    Position position{};
+    PositionMaker position{};
     ASSERT_EQ( 0, position.getPopIndexBB_3(bb));
     ASSERT_EQ( 5, position.getPopIndexBB_3(bb));
     ASSERT_EQ( 7, position.getPopIndexBB_3(bb));
@@ -116,7 +116,7 @@ TEST(Position, getPopIndexBB_3)
 TEST(Position, getPopIndexBB_4)
 {
     u64 bb{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-    Position position{};
+    PositionMaker position{};
     auto ret = position.getPopIndexBB_4(bb);
     ASSERT_EQ( 0, ret.first);
     ret = position.getPopIndexBB_4(ret.second);
@@ -136,7 +136,7 @@ TEST(Position, getPopIndexBB_4)
 TEST(Position, getPopIndexBB_5)
 {
     u64 bb{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-    Position position{};
+    PositionMaker position{};
     auto ret = position.getPopIndexBB_5(bb);
     ASSERT_EQ( 0, ret.first);
     ret = position.getPopIndexBB_5(ret.second);

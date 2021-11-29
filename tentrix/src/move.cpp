@@ -10,7 +10,7 @@
 
 
 
-void Position::setPosition(const PositionLetter &position_letter){
+void PositionMaker::setPosition(const PositionLetter &position_letter){
     bitboard[E_BB::WHITE] = position_letter.getWhitesBB();
     bitboard[E_BB::BLACK] = position_letter.getBlacksBB();
     bitboard[E_BB::PAWNS] = position_letter.getPawnsBB();
@@ -21,7 +21,7 @@ void Position::setPosition(const PositionLetter &position_letter){
     pieces = std::move(position_letter.getPieces());
 }
 
-u64 Position::computeMoveQueenWhite(unsigned char index) const{
+u64 PositionMaker::computeMoveQueenWhite(unsigned char index) const{
     u64 moveBB{0};
     for (int dir = 0; dir<4; ++dir){
         u64 rayBB = freeMovesQueen[index][dir];
@@ -47,7 +47,7 @@ u64 Position::computeMoveQueenWhite(unsigned char index) const{
 }
 
 
-int Position::getPopIndexBB_1(u64& bitboard) {
+int PositionMaker::getPopIndexBB_1(u64& bitboard) {
     std::bitset<64> bit_set{bitboard};
     auto index = bit_set._Find_first();
     if (index < 64){
@@ -56,7 +56,7 @@ int Position::getPopIndexBB_1(u64& bitboard) {
     return index;
 }
 
-int Position::getPopIndexBB_2(u64& bitboard) {
+int PositionMaker::getPopIndexBB_2(u64& bitboard) {
     std::bitset<64> bit_set{bitboard};
     auto index = bit_set._Find_first();
     if (index < 64){
@@ -65,17 +65,17 @@ int Position::getPopIndexBB_2(u64& bitboard) {
     return index;
 }
 
-int Position::getPopIndexBB_3(u64& bitboard) {
+int PositionMaker::getPopIndexBB_3(u64& bitboard) {
     auto index = std::countr_zero(bitboard);
     bitboard ^= (bitboard & -bitboard);
     return index;
 }
 
-std::pair<int, u64> Position::getPopIndexBB_4(u64 bitboard){
+std::pair<int, u64> PositionMaker::getPopIndexBB_4(u64 bitboard){
     return std::make_pair(std::countr_zero(bitboard), bitboard ^(bitboard & -bitboard));
 }
 
-std::pair<int, u64> Position::getPopIndexBB_5(u64 bitboard){
+std::pair<int, u64> PositionMaker::getPopIndexBB_5(u64 bitboard){
     auto index = std::countr_zero(bitboard);
     return std::make_pair(index , bitboard & ~(u64{1} << index));
 }
