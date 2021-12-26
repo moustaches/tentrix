@@ -12,7 +12,8 @@
 #include <array>
 #include <algorithm>
 #include <ranges>
-
+#include <variant>
+#include <vector>
 
 using namespace std;
 using u64 = uint64_t;
@@ -34,6 +35,8 @@ int main()
 
     PositionMaker position{};
     position.setPosition(position_string);
+
+
 
     return 0;
 }

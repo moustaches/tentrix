@@ -22,21 +22,6 @@ using u64 = uint64_t;
 
 
 
-static void BM_computeMoveQueenWhite(benchmark::State& state) {
-    PositionLetter position_string{std::string{
-            "RNKQNR"
-            "PPPPPP"
-            "......"
-            "...q.."
-            "pp..pp"
-            "rnk.nr"
-        }};
-    PositionMaker position{};
-    position.setPosition(position_string);
-    for (auto _ : state)
-        u64 queen_move = position.computeMoveQueenWhite(15);
-}
-
 static void BM_getPopIndexBB_1(benchmark::State& state) {
     PositionMaker position{};
     int index;
@@ -81,7 +66,7 @@ static void BM_getPopIndexBB_4(benchmark::State& state) {
         u64 bb {bb_0};
         for (int i = 0; i<8; ++i){
             auto ret = position.getPopIndexBB_4(bb);
-            //bb = ret.second;
+            bb = ret.second;
         }
     };
 }
@@ -94,16 +79,17 @@ static void BM_getPopIndexBB_5(benchmark::State& state) {
         u64 bb {bb_0};
         for (int i = 0; i<8; ++i){
             auto ret = position.getPopIndexBB_5(bb);
-            //bb = ret.second;
+            bb = ret.second;
         }
     };
 }
+
+
 BENCHMARK(BM_getPopIndexBB_5);
 BENCHMARK(BM_getPopIndexBB_4);
 BENCHMARK(BM_getPopIndexBB_3);
 BENCHMARK(BM_getPopIndexBB_2);
 BENCHMARK(BM_getPopIndexBB_1);
-BENCHMARK_MAIN();
 
 
 
