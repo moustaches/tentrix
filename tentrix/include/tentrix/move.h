@@ -41,17 +41,10 @@ constexpr void constexpr_for(F&& f)
 
 constexpr u64 computeRay(int index, std::pair<int,int> direction){
     u64 bitboard{0};
-<<<<<<< HEAD
-    int i = index%6 + direction.first;
-    int j = index/6 + direction.second;
-    while ((i >=0 && i <= 5) && (j >=0 && j <= 5)){
-        bitboard |= (u64{ 1 } << (i + j * 6));
-=======
     int i = index%chess_rules::size_column + direction.first;
     int j = index/chess_rules::size_row + direction.second;
     while ((i >=0 && i < chess_rules::size_column) && (j >=0 && j < chess_rules::size_row)){
         bitboard |= (u64{ 1 } << (i + j * chess_rules::size_column));
->>>>>>> d38a5ec0b0f8740aa5a7de7e605722dda3f397b0
         i += direction.first;
         j += direction.second;
     }
@@ -120,16 +113,11 @@ consteval std::array<u64, chess_rules::size_board> computeFreeMoveKnight(){
         int i_0 = iter%chess_rules::size_column;
         int j_0 = iter/chess_rules::size_row;
         for (auto direction : directions){
-<<<<<<< HEAD
-            if ((i_0+direction.first >= 0) && (i_0+direction.first <=5) && (j_0+direction.second >= 0) && (j_0+direction.second <=5)){
-                pos |= (u64{ 1 } << ((i_0 + direction.first) + ((j_0 + direction.second) * 6)));
-=======
             if ((i_0+direction.first >= 0)
                     && (i_0+direction.first < chess_rules::size_column)
                     && (j_0+direction.second >= 0)
                     && (j_0+direction.second <chess_rules::size_row)){
                 pos |= (u64{ 1 } << ((i_0 + direction.first) + ((j_0 + direction.second) * chess_rules::size_column)));
->>>>>>> d38a5ec0b0f8740aa5a7de7e605722dda3f397b0
             }
         }
         piece_move[iter]=pos;
