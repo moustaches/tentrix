@@ -8,6 +8,12 @@ endif()
 
 project(tentrix LANGUAGES CXX)
 
+# For runing exec (centralize libs and execs)
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+
 add_subdirectory(tentrix)
 add_subdirectory(tentrix_benchmark)
 add_subdirectory(tentrix_tests)
