@@ -236,8 +236,8 @@ struct PositionMaker{
         return freeMovesKnight[index] & ~bitboard[BLACK];
     }
 
-    static int getPopIndexBB_1(u64& bitboard);
-    static int getPopIndexBB_2(u64& bitboard);
+    //static int getPopIndexBB_1(u64& bitboard);
+    //static int getPopIndexBB_2(u64& bitboard);
     static int getPopIndexBB_3(u64& bitboard);
     static std::pair<int, u64> getPopIndexBB_4(u64 bitboard);
     static std::pair<int, u64> getPopIndexBB_5(u64 bitboard);
