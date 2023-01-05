@@ -1,7 +1,8 @@
 find_package(benchmark CONFIG REQUIRED)
 
 add_executable(tentrix_benchmark
-    main.cpp
+    compute_bits.cpp
+    compute_move.cpp
 )
 
 set_target_properties(tentrix_benchmark

@@ -6,7 +6,9 @@ include(GoogleTest)
 find_package(GTest CONFIG REQUIRED)
 
 add_executable( tentrix_tests
-    main.cpp
+    move_tools.cpp
+    move_queen.cpp
+    move_knight.cpp
 )
 
 set_target_properties(tentrix_tests
