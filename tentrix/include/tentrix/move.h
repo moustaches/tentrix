@@ -177,67 +177,80 @@ struct PositionMaker{
     }
 
 
-    template<typename T> u64 computeMoveQueen(std::size_t index) const;
-    template<> u64 computeMoveQueen<white>(std::size_t index) const{
-        u64 moveBB{0};
-        for (int dir = 0; dir<4; ++dir){
-            u64 rayBB = freeMovesQueen[index][dir];
-            u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-            int first_bloquer = std::countr_zero(bloquers);
-            if (first_bloquer<36){
-                rayBB ^= freeMovesQueen[first_bloquer][dir];
+    template<typename T> u64 computeMoveQueen(std::size_t index) const
+    {
+        if constexpr(std::is_same<T, white>()){
+			u64 moveBB{0};
+			for (int dir = 0; dir<4; ++dir){
+				u64 rayBB = freeMovesQueen[index][dir];
+				u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
+				int first_bloquer = std::countr_zero(bloquers);
+				if (first_bloquer<36){
+					rayBB ^= freeMovesQueen[first_bloquer][dir];
+				}
+				rayBB &= ~bitboard[WHITE];
+				moveBB |= rayBB;
+			}
+			for (int dir = 4; dir<8; ++dir){
+				u64 rayBB = freeMovesQueen[index][dir];
+				u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
+				int first_bloquer = 63-std::countl_zero(bloquers);
+				if (bloquers>0){
+					rayBB ^= freeMovesQueen[first_bloquer][dir];
+				}
+				rayBB &= ~bitboard[E_BB::WHITE];
+				moveBB |= rayBB;
+			}
+			return moveBB;
+		}
+        //  black
+        else {
+            u64 moveBB{ 0 };
+            for (int dir = 0; dir < 4; ++dir) {
+                u64 rayBB = freeMovesQueen[index][dir];
+                u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
+                int first_bloquer = std::countr_zero(bloquers);
+                if (first_bloquer < 36) {
+                    rayBB ^= freeMovesQueen[first_bloquer][dir];
+                }
+                rayBB &= ~bitboard[BLACK];
+                moveBB |= rayBB;
             }
-            rayBB &= ~bitboard[WHITE];
-            moveBB |= rayBB;
-        }
-        for (int dir = 4; dir<8; ++dir){
-            u64 rayBB = freeMovesQueen[index][dir];
-            u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-            int first_bloquer = 63-std::countl_zero(bloquers);
-            if (bloquers>0){
-                rayBB ^= freeMovesQueen[first_bloquer][dir];
+            for (int dir = 4; dir < 8; ++dir) {
+                u64 rayBB = freeMovesQueen[index][dir];
+                u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
+                int first_bloquer = 63 - std::countl_zero(bloquers);
+                if (bloquers > 0) {
+                    rayBB ^= freeMovesQueen[first_bloquer][dir];
+                }
+                rayBB &= ~bitboard[BLACK];
+                moveBB |= rayBB;
             }
-            rayBB &= ~bitboard[E_BB::WHITE];
-            moveBB |= rayBB;
+            return moveBB;
         }
-        return moveBB;
     }
-    template<> u64 computeMoveQueen<black>(std::size_t index) const{
-        u64 moveBB{0};
-        for (int dir = 0; dir<4; ++dir){
-            u64 rayBB = freeMovesQueen[index][dir];
-            u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-            int first_bloquer = std::countr_zero(bloquers);
-            if (first_bloquer<36){
-                rayBB ^= freeMovesQueen[first_bloquer][dir];
-            }
-            rayBB &= ~bitboard[BLACK];
-            moveBB |= rayBB;
+
+
+    template<typename T> u64 computeMoveKnight(std::size_t index) const
+    {
+        // white
+        if constexpr (std::is_same<T, white>())
+        {
+            return freeMovesKnight[index] & ~bitboard[WHITE];
         }
-        for (int dir = 4; dir<8; ++dir){
-            u64 rayBB = freeMovesQueen[index][dir];
-            u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-            int first_bloquer = 63-std::countl_zero(bloquers);
-            if (bloquers>0){
-                rayBB ^= freeMovesQueen[first_bloquer][dir];
-            }
-            rayBB &= ~bitboard[BLACK];
-            moveBB |= rayBB;
+        // black
+        else
+        {
+			return freeMovesKnight[index] & ~bitboard[BLACK];
         }
-        return moveBB;
     }
 
 
-    template<typename T> u64 computeMoveKnight(std::size_t index) const;
-    template<> u64 computeMoveKnight<white>(std::size_t index) const{
-        return freeMovesKnight[index] & ~bitboard[WHITE];
-    }
-    template<> u64 computeMoveKnight<black>(std::size_t index) const{
-        return freeMovesKnight[index] & ~bitboard[BLACK];
-    }
-
-    //static int getPopIndexBB_1(u64& bitboard);
-    //static int getPopIndexBB_2(u64& bitboard);
+// Only for gcc because std::bitset._Find_first() only define there
+#if defined(__GNUC__) || defined(__GNUG__)
+    static int getPopIndexBB_1(u64& bitboard);
+    static int getPopIndexBB_2(u64& bitboard);
+#endif
     static int getPopIndexBB_3(u64& bitboard);
     static std::pair<int, u64> getPopIndexBB_4(u64 bitboard);
     static std::pair<int, u64> getPopIndexBB_5(u64 bitboard);

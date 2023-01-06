@@ -32,10 +32,19 @@ qrc_*.cpp
 Thumbs.db
 *.res
 *.rc
+CMakeSettings.json
+CppProperties.json
+CMakeLists.txt.*
 /.qmake.cache
 /.qmake.stash
+*.kdev4
 
+# build dir
 /build/
+/out/
+
+# visual studio dir
+/.vs/
 
 # qtcreator generated files
 *.pro.user*

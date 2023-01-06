@@ -22,41 +22,44 @@ using u64 = uint64_t;
 
 
 
-//static void BM_getPopIndexBB_1(benchmark::State& state) {
-//    PositionMaker position{};
-//    int index;
-//    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-//    for (auto _ : state){
-//        u64 bb {bb_0};
-//        for (int i = 0; i<8; ++i){
-//            index = position.getPopIndexBB_1(bb);
-//        }
-//    };
-//}
-//
-//static void BM_getPopIndexBB_2(benchmark::State& state) {
-//    PositionMaker position{};
-//    int index;
-//    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-//    for (auto _ : state){
-//        u64 bb {bb_0};
-//        for (int i = 0; i<8; ++i){
-//            index = position.getPopIndexBB_1(bb);
-//        }
-//    };
-//}
-//
-//static void BM_getPopIndexBB_3(benchmark::State& state) {
-//    PositionMaker position{};
-//    int index;
-//    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
-//    for (auto _ : state){
-//        u64 bb {bb_0};
-//        for (int i = 0; i<8; ++i){
-//            index = position.getPopIndexBB_1(bb);
-//        }
-//    };
-//}
+// Only for gcc because std::bitset._Find_first() only define there
+#if defined(__GNUC__) || defined(__GNUG__)
+static void BM_getPopIndexBB_1(benchmark::State& state) {
+    PositionMaker position{};
+    int index;
+    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
+    for (auto _ : state){
+        u64 bb {bb_0};
+        for (int i = 0; i<8; ++i){
+            index = position.getPopIndexBB_1(bb);
+        }
+    };
+}
+
+static void BM_getPopIndexBB_2(benchmark::State& state) {
+    PositionMaker position{};
+    int index;
+    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
+    for (auto _ : state){
+        u64 bb {bb_0};
+        for (int i = 0; i<8; ++i){
+            index = position.getPopIndexBB_1(bb);
+        }
+    };
+}
+
+static void BM_getPopIndexBB_3(benchmark::State& state) {
+    PositionMaker position{};
+    int index;
+    u64 bb_0{0b0000000000000000000000000000'100000'000000'001000'000001'000010'100001};
+    for (auto _ : state){
+        u64 bb {bb_0};
+        for (int i = 0; i<8; ++i){
+            index = position.getPopIndexBB_1(bb);
+        }
+    };
+}
+#endif
 
 static void BM_getPopIndexBB_4(benchmark::State& state) {
     PositionMaker position{};
@@ -87,9 +90,13 @@ static void BM_getPopIndexBB_5(benchmark::State& state) {
 
 BENCHMARK(BM_getPopIndexBB_5);
 BENCHMARK(BM_getPopIndexBB_4);
-//BENCHMARK(BM_getPopIndexBB_3);
-//BENCHMARK(BM_getPopIndexBB_2);
-//BENCHMARK(BM_getPopIndexBB_1);
+
+// Only for gcc because std::bitset._Find_first() only define there
+#if defined(__GNUC__) || defined(__GNUG__)
+BENCHMARK(BM_getPopIndexBB_3);
+BENCHMARK(BM_getPopIndexBB_2);
+BENCHMARK(BM_getPopIndexBB_1);
+#endif
 
 
 

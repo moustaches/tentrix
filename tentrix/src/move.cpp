@@ -34,24 +34,26 @@ void PositionMaker::setPosition(const PositionLetter &position_letter){
 }
 
 
+// Only for gcc because std::bitset._Find_first() only define there
+#if defined(__GNUC__) || defined(__GNUG__)
+int PositionMaker::getPopIndexBB_1(u64& bitboard) {
+    std::bitset<64> bit_set{bitboard};
+    auto index = bit_set._Find_first();
+    if (index < 64){
+        bitboard = bit_set.reset(index).to_ulong();
+    }
+    return index;
+}
 
-//int PositionMaker::getPopIndexBB_1(u64& bitboard) {
-//    std::bitset<64> bit_set{bitboard};
-//    auto index = bit_set._Find_first();
-//    if (index < 64){
-//        bitboard = bit_set.reset(index).to_ulong();
-//    }
-//    return index;
-//}
-//
-//int PositionMaker::getPopIndexBB_2(u64& bitboard) {
-//    std::bitset<64> bit_set{bitboard};
-//    auto index = bit_set._Find_first();
-//    if (index < 64){
-//        bitboard &= ~(u64{1} << index);
-//    }
-//    return index;
-//}
+int PositionMaker::getPopIndexBB_2(u64& bitboard) {
+    std::bitset<64> bit_set{bitboard};
+    auto index = bit_set._Find_first();
+    if (index < 64){
+        bitboard &= ~(u64{1} << index);
+    }
+    return index;
+}
+#endif
 
 int PositionMaker::getPopIndexBB_3(u64& bitboard) {
     auto index = std::countr_zero(bitboard);

@@ -1,7 +1,5 @@
 
 
-enable_testing()
-
 include(GoogleTest)
 find_package(GTest CONFIG REQUIRED)
 
@@ -21,9 +19,6 @@ set_target_properties(tentrix_tests
 target_link_libraries(tentrix_tests
 	PRIVATE
 		tentrix
-		#GTest::gmock
-		GTest::gtest
-		#GTest::gmock_main
 		GTest::gtest_main
 )
 

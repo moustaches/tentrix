@@ -20,6 +20,11 @@
 using u64 = uint64_t;
 
 namespace {
+    TEST(Position, computeMe)
+    {
+        ASSERT_EQ(0, 0);
+    }
+
     TEST(Position, computeMoveKnight_templated_white)
     {
         PositionMaker position{};
