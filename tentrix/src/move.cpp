@@ -70,4 +70,3 @@ std::pair<int, u64> PositionMaker::getPopIndexBB_5(u64 bitboard){
     return std::make_pair(index , bitboard & ~(u64{1} << index));
 }
 
-constexpr std::array<std::array<u64, 8>, 36> PositionMaker::freeMovesQueen = computeFreeMoveQueen();
