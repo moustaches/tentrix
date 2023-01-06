@@ -149,8 +149,11 @@ struct Tree{
 };
 
 struct PositionMaker{
+
     void setTree(Tree& tree);
+
     void setPosition(const PositionLetter& position_letter);
+
     u64 computeMoveQueenWhite(unsigned char index) const{
         u64 moveBB{0};
         for (int dir = 0; dir<4; ++dir){
@@ -259,7 +262,7 @@ struct PositionMaker{
 
 private:
     const u64 mask_36 = 0b0000000000000000000000000000'111111'111111'111111'111111'111111'111111;
-    static constexpr std::array<std::array<u64, 8>, 36> freeMovesQueen = computeFreeMoveQueen();
+    static constexpr std::array<std::array<u64, 8>, 36> freeMovesQueen{};// = computeFreeMoveQueen();
     static constexpr std::array<std::array<u64, 4>, 36> freeMovesRook = computeFreeMoveRook();
     static constexpr std::array<u64, 36> freeMovesKnight = computeFreeMoveKnight();
 
