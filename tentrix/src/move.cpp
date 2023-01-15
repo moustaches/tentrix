@@ -40,7 +40,7 @@ int PositionMaker::getPopIndexBB_1(u64& bitboard) {
     std::bitset<64> bit_set{bitboard};
     auto index = bit_set._Find_first();
     if (index < 64){
-        bitboard = bit_set.reset(index).to_ulong();
+        bitboard = (u64) bit_set.reset(index).to_ullong();
     }
     return index;
 }
@@ -69,4 +69,3 @@ std::pair<int, u64> PositionMaker::getPopIndexBB_5(u64 bitboard){
     auto index = std::countr_zero(bitboard);
     return std::make_pair(index , bitboard & ~(u64{1} << index));
 }
-

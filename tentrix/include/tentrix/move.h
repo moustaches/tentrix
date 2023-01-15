@@ -64,7 +64,7 @@ consteval std::array<std::array<u64, chess_rules::nb_ray>, chess_rules::size_boa
         std::pair{1,-1}
     };
     std::array<std::array<u64, chess_rules::nb_ray>, chess_rules::size_board> pieces_rays{};
-    if (std::is_constant_evaluated()){return pieces_rays;};
+   // if (std::is_constant_evaluated()){return pieces_rays;};
     constexpr_for<0, chess_rules::size_board>([&](int index){
         std::array<u64, chess_rules::nb_ray> piece_ray{};
         auto iter{0};
@@ -126,6 +126,15 @@ consteval std::array<u64, chess_rules::size_board> computeFreeMoveKnight(){
 };
 
 
+
+namespace piece_moves_free
+{
+    static constinit std::array<std::array<u64, 8>, 36> queen = computeFreeMoveQueen();
+    static constinit std::array<std::array<u64, 4>, 36> rook = computeFreeMoveRook();
+    static constinit std::array<u64, 36> knight = computeFreeMoveKnight();
+}
+
+
 struct white;
 struct black;
 
@@ -157,21 +166,21 @@ struct PositionMaker{
     u64 computeMoveQueenWhite(unsigned char index) const{
         u64 moveBB{0};
         for (int dir = 0; dir<4; ++dir){
-            u64 rayBB = freeMovesQueen[index][dir];
+            u64 rayBB = piece_moves_free::queen[index][dir];
             u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
             int first_bloquer = std::countr_zero(bloquers);
             if (first_bloquer<36){
-                rayBB ^= freeMovesQueen[first_bloquer][dir];
+                rayBB ^= piece_moves_free::queen[first_bloquer][dir];
             }
             rayBB &= ~bitboard[WHITE];
             moveBB |= rayBB;
         }
         for (int dir = 4; dir<8; ++dir){
-            u64 rayBB = freeMovesQueen[index][dir];
+            u64 rayBB = piece_moves_free::queen[index][dir];
             u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
             int first_bloquer = 63-std::countl_zero(bloquers);
             if (bloquers>0){
-                rayBB ^= freeMovesQueen[first_bloquer][dir];
+                rayBB ^= piece_moves_free::queen[first_bloquer][dir];
             }
             rayBB &= ~bitboard[WHITE];
             moveBB |= rayBB;
@@ -180,58 +189,33 @@ struct PositionMaker{
     }
 
 
-    template<typename T> u64 computeMoveQueen(std::size_t index) const
+    template<typename T>
+    u64 computeMoveQueen(std::size_t index) const
     {
-        if constexpr(std::is_same<T, white>()){
-			u64 moveBB{0};
-			for (int dir = 0; dir<4; ++dir){
-				u64 rayBB = freeMovesQueen[index][dir];
-				u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-				int first_bloquer = std::countr_zero(bloquers);
-				if (first_bloquer<36){
-					rayBB ^= freeMovesQueen[first_bloquer][dir];
-				}
-				rayBB &= ~bitboard[WHITE];
-				moveBB |= rayBB;
+        constexpr auto COLOR = (std::is_same<T, white>()) ? WHITE : BLACK;
+		u64 moveBB{0};
+		for (int dir = 0; dir<4; ++dir){
+			u64 rayBB = piece_moves_free::queen[index][dir];
+			u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
+			int first_bloquer = std::countr_zero(bloquers);
+			if (first_bloquer<36){
+				rayBB ^= piece_moves_free::queen[first_bloquer][dir];
 			}
-			for (int dir = 4; dir<8; ++dir){
-				u64 rayBB = freeMovesQueen[index][dir];
-				u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-				int first_bloquer = 63-std::countl_zero(bloquers);
-				if (bloquers>0){
-					rayBB ^= freeMovesQueen[first_bloquer][dir];
-				}
-				rayBB &= ~bitboard[E_BB::WHITE];
-				moveBB |= rayBB;
-			}
-			return moveBB;
+			rayBB &= ~bitboard[COLOR];
+			moveBB |= rayBB;
 		}
-        //  black
-        else {
-            u64 moveBB{ 0 };
-            for (int dir = 0; dir < 4; ++dir) {
-                u64 rayBB = freeMovesQueen[index][dir];
-                u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-                int first_bloquer = std::countr_zero(bloquers);
-                if (first_bloquer < 36) {
-                    rayBB ^= freeMovesQueen[first_bloquer][dir];
-                }
-                rayBB &= ~bitboard[BLACK];
-                moveBB |= rayBB;
-            }
-            for (int dir = 4; dir < 8; ++dir) {
-                u64 rayBB = freeMovesQueen[index][dir];
-                u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
-                int first_bloquer = 63 - std::countl_zero(bloquers);
-                if (bloquers > 0) {
-                    rayBB ^= freeMovesQueen[first_bloquer][dir];
-                }
-                rayBB &= ~bitboard[BLACK];
-                moveBB |= rayBB;
-            }
-            return moveBB;
-        }
-    }
+		for (int dir = 4; dir<8; ++dir){
+			u64 rayBB = piece_moves_free::queen[index][dir];
+			u64 bloquers = rayBB & (bitboard[WHITE] | bitboard[BLACK]);
+			int first_bloquer = 63-std::countl_zero(bloquers);
+			if (bloquers>0){
+				rayBB ^= piece_moves_free::queen[first_bloquer][dir];
+			}
+			rayBB &= ~bitboard[COLOR];
+			moveBB |= rayBB;
+		}
+		return moveBB;
+	}
 
 
     template<typename T> u64 computeMoveKnight(std::size_t index) const
@@ -239,12 +223,12 @@ struct PositionMaker{
         // white
         if constexpr (std::is_same<T, white>())
         {
-            return freeMovesKnight[index] & ~bitboard[WHITE];
+            return piece_moves_free::knight[index] & ~bitboard[WHITE];
         }
         // black
         else
         {
-			return freeMovesKnight[index] & ~bitboard[BLACK];
+			return piece_moves_free::knight[index] & ~bitboard[BLACK];
         }
     }
 
@@ -262,9 +246,6 @@ struct PositionMaker{
 
 private:
     const u64 mask_36 = 0b0000000000000000000000000000'111111'111111'111111'111111'111111'111111;
-    static constexpr std::array<std::array<u64, 8>, 36> freeMovesQueen = computeFreeMoveQueen();
-    static constexpr std::array<std::array<u64, 4>, 36> freeMovesRook = computeFreeMoveRook();
-    static constexpr std::array<u64, 36> freeMovesKnight = computeFreeMoveKnight();
 
     Node* node{nullptr};
     u64 bitboard[7];
